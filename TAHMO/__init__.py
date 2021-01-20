@@ -51,4 +51,11 @@ class TAHMO:
         """
         apiRequest = requests.get("%s/%s" % (self.baseurl,endpoint),                                  
             auth=requests.auth.HTTPBasicAuth(self.api_id, self.api_secret))
-        return apiRequest.json()
+        try:
+            json = apiRequest.json()
+            return json
+        except JSONDecodeError:
+            print("Failed to download or failed to parse JSON.")
+            print(apiRequest)
+            return None
+            
